@@ -1,12 +1,6 @@
 FE = FE or {}
 
-local frame = CreateFrame("Frame", "DisenchantHelperFrame", UIParent, "BasicFrameTemplateWithInset")
-frame:SetSize(360, 480) -- Width, Height
-frame:SetPoint("CENTER") -- Position on the screen
-frame.title = frame:CreateFontString(nil, "OVERLAY")
-frame.title:SetFontObject("GameFontHighlight")
-frame.title:SetPoint("LEFT", frame.TitleBg, "LEFT", 5, 0)
-frame.title:SetText("Disenchant Helper")
+local frame = CreateFrame("Frame", "DisenchantHelperFrame", UIParent )
 
 FE.framePool = CreateFramePool("Button", frame, "SecureActionButtonTemplate, ActionButtonTemplate")
 
