@@ -1,18 +1,24 @@
 FE = FE or {}
 
-local frame = CreateFrame("Frame", "DisenchantHelperFrame", UIParent )
+local frame = CreateFrame("Frame", "DisenchantHelperFrame", UIParent, "BackdropTemplate" )
+frame:SetSize(360, 480) -- Width, Height
+frame:SetPoint("CENTER") -- Position on the screen
+frame.title = frame:CreateFontString(nil, "OVERLAY")
+frame.title:SetFontObject("GameFontHighlight")
+frame.title:SetPoint("LEFT", frame.TitleBg, "LEFT", 5, 0)
+frame.title:SetText("Disenchant Helper")
 
-FE.framePool = CreateFramePool("Button", frame, "SecureActionButtonTemplate, ActionButtonTemplate")
+local framePool = CreateFramePool("Button", frame, "SecureActionButtonTemplate, ActionButtonTemplate")
 
 local function CreateOrUpdateDisenchantButton(bag, slot, parent, i, item_info)
     local buttonWidth = 45
     local buttonHeight = 45
     local buttonsPerRow = 10
 
-    local xPosition = ((i - 1) % buttonsPerRow) * buttonWidth
-    local yPosition = -math.floor((i - 1) / buttonsPerRow) * buttonHeight
-
-    local btn, isNew = FE.framePool:Acquire()
+    local xPosition = ((i) % buttonsPerRow) * buttonWidth
+    local yPosition = -math.floor((i) / buttonsPerRow) * buttonHeight
+    --print( "i: "..i.." x:"..xPosition.." y:"..yPosition)
+    local btn, isNew = framePool:Acquire()
     if isNew then
         btn:SetSize(40, 40)
         btn:EnableMouse(true)
@@ -39,7 +45,7 @@ local function CreateOrUpdateDisenchantButton(bag, slot, parent, i, item_info)
 end
 
 local function UpdateGearList()
-    FE.framePool:ReleaseAll() -- Free all frames for reuse
+    framePool:ReleaseAll() -- Free all frames for reuse
     local i = 0
     for bag = 0, 4 do
         for slot = 1, C_Container.GetContainerNumSlots(bag) do
@@ -77,7 +83,7 @@ frame:SetScript("OnShow", function()
     
 end)
 
-SLASH_DE1 = "/ezde"
+SLASH_EZDE1 = "/ezde"
 SlashCmdList["EZDE"] = function(msg)
 
     if FE.DE_SHOW then
@@ -89,3 +95,5 @@ SlashCmdList["EZDE"] = function(msg)
         tick()
     end
 end
+
+print("EZDE LOADED")
